@@ -10,7 +10,16 @@ export class InfoPaginaService {
   info: InfoPagina = {};
   cargada = false;
 
+  equipo: any[] = [];
+
   constructor( private http: HttpClient ) { 
+
+    this.cargarInfo();
+    this.cargarEquipo();
+
+  }
+
+  private cargarInfo() {
 
     //console.log('Servicio de infoPagina listo');
 
@@ -20,12 +29,22 @@ export class InfoPaginaService {
 
         this.cargada = true;
         this.info = resp;
-        console.log(resp);
+        //console.log(resp);
         //console.log(resp['e-mail']);
 
-      });
-
+        });
   }
 
+  private cargarEquipo(){
 
+    // Leer archivo JSON
+    this.http.get('https://angular-html-9db6b.firebaseio.com/equipo.json')
+      .subscribe( (resp: any[]) => {
+
+        this.equipo = resp;
+        console.log(resp);
+        });
+
+  }
+  
 }
